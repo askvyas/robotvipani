@@ -23,8 +23,8 @@ function init() {
     const loader = new THREE.GLTFLoader();
     loader.load('/RobotExpressive.glb', function (gltf) {
         model = gltf.scene;
-        model.position.set(-1.5, 0, 0); // Adjust the position as needed
-        model.scale.set(0.25, 0.25, 0.25); // Adjust the scale as needed
+        model.position.set(-2.0, 0, 0); 
+        model.scale.set(0.25, 0.25, 0.25);
         scene.add(model);
     }, undefined, function (error) {
         console.error(error);
@@ -76,9 +76,12 @@ function sendMessage() {
         productResponse.textContent = 'ChatBot: No products found for ' + userInput;
     }
     chatBox.appendChild(productResponse);
-
     document.getElementById('user-input').value = '';
 
+    // Delay before redirecting
+    setTimeout(function() {
+        window.location.href = '/results.html'; // Replace with your target page URL
+    }, 2000); // Redirect after 2 seconds (2000 milliseconds)
 
     
 }

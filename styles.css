@@ -1,35 +1,70 @@
-#main-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+/* Full-screen setup */
+html, body {
+    height: 100%;
+    margin: 0;
     overflow: hidden;
+    background: #000; /* In case the scene takes time to load, the background is still dark */
 }
 
+/* Header style */
 header {
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
-    left: 0;
-    z-index: 10;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent */
+    padding: 10px 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
     color: #fff;
+    text-align: center;
+    z-index: 999;
+    font-size: 2em;
 }
 
+/* Scene container style */
 #robot-scene {
     width: 100%;
-    height: 100%;
-    background-color: #000; /* Assuming black for space or dark theme */
+    height: calc(100% - 100px); /* Adjust height to make space for the chat box */
+    position: absolute;
+    top: 0;
+    z-index: 1;
 }
 
+/* Chat box styling */
 .chat-container {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    background-color: rgba(255, 255, 255, 0.5); /* semi-transparent */
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 10;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    display: flex;
+    justify-content: space-between; /* Align input and button */
+    align-items: center;
+    box-sizing: border-box; /* Includes padding in the width */
+    z-index: 999;
+}
+
+/* Input field styling */
+#user-input {
+    flex-grow: 1;
+    margin-right: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 1em;
+}
+
+/* Send button styling */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    outline: none;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
