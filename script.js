@@ -53,35 +53,41 @@ function animate() {
     renderer.render(scene, camera);
 }
 function sendMessage() {
-    var products = [
-        { name: 'Robot A', description: 'Autonomous navigation robot' },
-        { name: 'Robot B', description: 'Industrial assembly robot' },
-        // Add more products as needed
-    ];
-
     var userInput = document.getElementById('user-input').value.toLowerCase();
+    window.location.href = `/results.html?query=${encodeURIComponent(userInput)}`;
+
     var chatBox = document.getElementById('chat-box');
     var userMessage = document.createElement('div');
     userMessage.textContent = 'You: ' + userInput;
     chatBox.appendChild(userMessage);
 
-    // Find matching products
-    var matchingProducts = products.filter(product => product.description.toLowerCase().includes(userInput));
+    fetch(`https://localhost:9200/robotvipani/_search?q=${userInput}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Basic ' + btoa('elastic:lWFUI*21Fio46t5wGtQI'), 
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        var matchingProducts = data.hits.hits.map(hit => hit._source.name);
+        var productResponse = document.createElement('div');
+        if (matchingProducts.length > 0) {
+            var productList = matchingProducts.join(', ');
+            productResponse.textContent = 'ChatBot: Here are some robotics products for ' + userInput + ': ' + productList;
+        } else {
+            productResponse.textContent = 'ChatBot: No products found for ' + userInput;
+        }
+        chatBox.appendChild(productResponse);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 
-    var productResponse = document.createElement('div');
-    if (matchingProducts.length > 0) {
-        var productList = matchingProducts.map(product => product.name).join(', ');
-        productResponse.textContent = 'ChatBot: Here are some robotics products for ' + userInput + ': ' + productList;
-    } else {
-        productResponse.textContent = 'ChatBot: No products found for ' + userInput;
-    }
-    chatBox.appendChild(productResponse);
     document.getElementById('user-input').value = '';
 
-    // Delay before redirecting
     setTimeout(function() {
-        window.location.href = '/results.html'; // Replace with your target page URL
-    }, 2000); // Redirect after 2 seconds (2000 milliseconds)
-
-    
+        window.location.href = '/results.html'; 
+    }, 2000); 
 }
+

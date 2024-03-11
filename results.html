@@ -8,13 +8,23 @@
     <header>
         <h1>Robot Vipani</h1>
     </header>
-    <div id="robot-scene"></div>
     <div class="chat-container">
         <div class="chat-box" id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Type a message...">
     </div>
     <script src="https://unpkg.com/three@0.125.2/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.125.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="script.js"></script>
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the search query from the URL and perform the search
+        const query = getQueryParameter('query');
+        if (query) {
+            searchProducts(query);
+        }
+    </script>
 </body>
 </html>
